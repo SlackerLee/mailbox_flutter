@@ -1,0 +1,54 @@
+@charset "UTF-8";
+
+:root {
+    color-scheme: light;
+    --special-text-color: black;
+    --border-color: black;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --special-text-color: black;
+        --border-color: black;
+    }
+}
+
+@font-face {
+    font-family: "Wingdings";
+    src: url("Wingdings.ttf");
+}
+
+html {
+    font-family: "Calibri", sans-serif;
+}
+
+img {
+    height: auto;
+}
+
+table, th, td {
+    border-color: var(--border-color) !important;
+    word-wrap: break-word;
+}
+
+div {
+    color: var(--special-text-color) !important;
+}
+
+#myEditableDiv {
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    word-wrap: break-word;
+    min-height: 400px;
+    overflow: auto;
+}
+
+#myEditableDiv:focus {
+    outline: 0px solid transparent;
+}
+
+#endTag {
+    border-width: 1px;
+    border-color: #ffffff;
+    opacity: 0;
+}
