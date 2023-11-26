@@ -11,9 +11,9 @@ class MailDataObj {
 
   /// The generated code below handles if the corresponding JSON value doesn't
   /// exist or is empty.
-  final DateTime? senetDate;
+  final DateTime? sentDate;
 
-  MailDataObj(this.from, this.to, this.cc, this.content, this.senetDate);
+  MailDataObj(this.from, this.to, this.cc, this.content, this.sentDate);
 
   factory MailDataObj.fromJson(Map<String, dynamic> json) => _$MailDataObjFromJson(json);
 

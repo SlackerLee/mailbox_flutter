@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_webview/model/mail_data_obj.dart';
-import 'package:flutter_webview/view/reply_mail_view.dart';
 
-class ReadMailView extends StatefulWidget {
-  const ReadMailView({super.key});
+class ReplyMailView extends StatefulWidget {
+  final MailDataObj mailDataObj;
+
+  const ReplyMailView({super.key, required this.mailDataObj});
 
   @override
-  State<ReadMailView> createState() => _ReadMailViewState();
+  State<ReplyMailView> createState() => _ReplyMailViewState();
 }
 
-class _ReadMailViewState extends State<ReadMailView>
+class _ReplyMailViewState extends State<ReplyMailView>
     with WidgetsBindingObserver {
   InAppWebViewController? webViewController;
 
@@ -26,63 +27,38 @@ class _ReadMailViewState extends State<ReadMailView>
 
   @override
   Widget build(BuildContext context) {
-    // Example mail obj for testing
-    final mailDataObj = MailDataObj(
-        'user1@mail.com',
-        'user22@mail.com',
-        'hello@mail.com',
-        """
-    <html>
-        <head>
-          <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        </head>
-        <body>
-          <p>Hello World!</p>
-        </body>
-    </html>
-    """,
-        DateTime(2020, 5, 5));
-
+    MailDataObj mail = widget.mailDataObj;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Read Mail'),
+        title: const Text('Reply Mail'),
         backgroundColor: Colors.blue,
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ReplyMailView(mailDataObj: mailDataObj),),
-          );
-        },
-        child: const Icon(Icons.turn_left),
       ),
       body: Column(
         children: [
           progressIndicator(),
           TextFormField(
-            initialValue: mailDataObj.from,
+            initialValue: mail.from,
             readOnly: true,
             decoration: InputDecoration(labelText: 'From:'),
             maxLines: null,
             keyboardType: TextInputType.multiline,
           ),
           TextFormField(
-            initialValue: mailDataObj.to,
+            initialValue: mail.to,
             readOnly: true,
             decoration: InputDecoration(labelText: 'To:'),
             maxLines: null,
             keyboardType: TextInputType.multiline,
           ),
           TextFormField(
-            initialValue: mailDataObj.cc,
+            initialValue: mail.cc,
             readOnly: true,
             decoration: InputDecoration(labelText: 'Cc:'),
             maxLines: null,
             keyboardType: TextInputType.multiline,
           ),
           TextFormField(
-            initialValue: mailDataObj.sentDate.toString(),
+            initialValue: mail.sentDate.toString(),
             readOnly: true,
             decoration: InputDecoration(labelText: 'Data:'),
             maxLines: null,
@@ -91,13 +67,28 @@ class _ReadMailViewState extends State<ReadMailView>
           Expanded(
             child: InAppWebView(
               key: GlobalKey(),
-              initialData: InAppWebViewInitialData(data: mailDataObj.content),
+              initialData: InAppWebViewInitialData(data: mail.content),
               initialOptions: InAppWebViewGroupOptions(
-                  crossPlatform: InAppWebViewOptions(
-                clearCache: true,
-              )),
+                crossPlatform: InAppWebViewOptions(
+                  clearCache: true,
+                ),
+              ),
               onWebViewCreated: (controller) async {
                 webViewController = controller;
+              },
+              onLoadStop: (controller, url) async {
+                webViewController = controller;
+                // Inject CSS assets
+                await webViewController?.injectCSSFileFromAsset(
+                    assetFilePath: "assets/website/meStyle.css");
+                // Inject JS assets
+                await webViewController?.injectJavascriptFileFromAsset(
+                    assetFilePath: "assets/website/meEditor.js");
+
+                _initEditor();
+
+                await webViewController?.evaluateJavascript(
+                    source: "document.documentElement.outerHTML;");
               },
             ),
           ),
@@ -108,5 +99,21 @@ class _ReadMailViewState extends State<ReadMailView>
 
   Widget progressIndicator() {
     return LinearProgressIndicator(value: _progress);
+  }
+
+  void _initEditor() async {
+    _injectDivJavascript(divId: "myEditableDiv", contentEditable: true);
+    _injectDivJavascript(divId: "meContainer");
+  }
+
+  void _injectDivJavascript({String? divId, bool? contentEditable}) async {
+    await webViewController?.evaluateJavascript(source: """
+    var body = document.body;
+    var div = document.createElement('div');
+    ${contentEditable != null ? "div.contentEditable = ${contentEditable};" : ""}
+    ${divId != null ? "div.id = '${divId}';" : ""}
+    div.innerHTML = body.innerHTML;
+    body.innerHTML = div.outerHTML;
+  """);
   }
 }

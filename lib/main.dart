@@ -1,8 +1,21 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_webview/view/home_view.dart';
 
-void main() {
-  runApp(const MyApp());
+//void main() {
+//  runApp(const MyApp());
+//}
+
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  if (Platform.isAndroid) {
+    await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+  }
+
+  runApp(new MyApp());
 }
 
 class MyApp extends StatelessWidget {
