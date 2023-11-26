@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class InAppBrowserView extends StatefulWidget {
   const InAppBrowserView({super.key});
@@ -20,10 +21,12 @@ class _InAppBrowserViewState extends State<InAppBrowserView> with WidgetsBinding
       body: Column(
         children: [
           progressIndicator(),
-          const Expanded(
-            child: Text("data"),
+          Expanded(
+            child: InAppWebView(
+              initialUrlRequest:
+                  URLRequest(url: Uri.parse('https://www.google.com')),
             ),
-  
+          ),
         ],
       ),
     );

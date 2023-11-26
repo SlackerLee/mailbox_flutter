@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_webview/view/compose_mail_view.dart';
 import 'package:flutter_webview/view/in_app_browser.dart';
+import 'package:flutter_webview/view/read_mail_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -21,7 +23,17 @@ class HomeView extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const InAppBrowserView()),
+                      builder: (context) => const ComposeMailView()),
+                );
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Read Mail'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ReadMailView()),
                 );
               },
             ),
