@@ -33,6 +33,15 @@ class _ReplyMailViewState extends State<ReplyMailView>
         title: const Text('Reply Mail'),
         backgroundColor: Colors.blue,
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          String? mailContent = await webViewController?.evaluateJavascript(source: "document.body.outerHTML;");
+          if (mailContent != null) {
+            showAlertDialog( mailContent);
+          }
+        },
+        child: const Icon(Icons.send),
+      ),
       body: Column(
         children: [
           progressIndicator(),
@@ -78,17 +87,14 @@ class _ReplyMailViewState extends State<ReplyMailView>
               },
               onLoadStop: (controller, url) async {
                 webViewController = controller;
+                // changing the webview from read only to editable
                 // Inject CSS assets
                 await webViewController?.injectCSSFileFromAsset(
                     assetFilePath: "assets/website/meStyle.css");
                 // Inject JS assets
                 await webViewController?.injectJavascriptFileFromAsset(
                     assetFilePath: "assets/website/meEditor.js");
-
                 _initEditor();
-
-                await webViewController?.evaluateJavascript(
-                    source: "document.documentElement.outerHTML;");
               },
             ),
           ),
@@ -115,5 +121,27 @@ class _ReplyMailViewState extends State<ReplyMailView>
     div.innerHTML = body.innerHTML;
     body.innerHTML = div.outerHTML;
   """);
+  }
+
+  void showAlertDialog( String content) {
+    showDialog<String>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Mail Content'),
+        content: SingleChildScrollView(
+          child: Text(content),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 }

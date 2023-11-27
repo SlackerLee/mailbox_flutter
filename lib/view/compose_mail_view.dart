@@ -9,7 +9,7 @@ class ComposeMailView extends StatefulWidget {
 }
 
 class _ComposeMailViewState extends State<ComposeMailView> with WidgetsBindingObserver {
-  InAppWebViewController? _webViewController;
+  InAppWebViewController? webViewController;
 
   final GlobalKey webViewKey = GlobalKey();
   final double _progress = 0;
