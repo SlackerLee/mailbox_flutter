@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_webview/model/mail_data_obj.dart';
+import 'package:flutter_webview/utils/alert_util.dart';
 
 class ReplyMailView extends StatefulWidget {
   final MailDataObj mailDataObj;
@@ -37,7 +38,7 @@ class _ReplyMailViewState extends State<ReplyMailView>
         onPressed: () async {
           String? mailContent = await webViewController?.evaluateJavascript(source: "document.body.outerHTML;");
           if (mailContent != null) {
-            showAlertDialog( mailContent);
+            showAlertDialog(mailContent); // TODO change to send mail function
           }
         },
         child: const Icon(Icons.send),
@@ -48,7 +49,7 @@ class _ReplyMailViewState extends State<ReplyMailView>
           TextFormField(
             initialValue: mail.from,
             readOnly: true,
-            decoration: InputDecoration(labelText: 'From:'),
+            decoration: const InputDecoration(labelText: 'From:'),
             maxLines: null,
             keyboardType: TextInputType.multiline,
           ),
@@ -75,7 +76,7 @@ class _ReplyMailViewState extends State<ReplyMailView>
           ),
           Expanded(
             child: InAppWebView(
-              key: GlobalKey(),
+              key: webViewKey,
               initialData: InAppWebViewInitialData(data: mail.content),
               initialOptions: InAppWebViewGroupOptions(
                 crossPlatform: InAppWebViewOptions(
@@ -123,25 +124,10 @@ class _ReplyMailViewState extends State<ReplyMailView>
   """);
   }
 
-  void showAlertDialog( String content) {
-    showDialog<String>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Mail Content'),
-        content: SingleChildScrollView(
-          child: Text(content),
-        ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext, 'Cancel'),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext, 'OK'),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
+  void showAlertDialog(String content) {
+    AlertUtil.showConfirmAlertDialog(context, 'Confirmation', content, () {
+      // Handle onDismissed callback
+      Navigator.pop(context);
+    });
   }
 }
