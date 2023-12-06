@@ -23,8 +23,7 @@ class _InAppBrowserViewState extends State<InAppBrowserView> with WidgetsBinding
           progressIndicator(),
           Expanded(
             child: InAppWebView(
-              initialUrlRequest:
-                  URLRequest(url: Uri.parse('https://www.google.com')),
+              initialUrlRequest: URLRequest(url: Uri.parse('https://www.google.com')),
             ),
           ),
         ],

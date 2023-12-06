@@ -6,7 +6,7 @@ class MailDataObj {
    /// The generated code assumes these values exist in JSON.
   final String from;
   final String to;
-    final String cc;
+  final String cc;
   final String content;
 
   /// The generated code below handles if the corresponding JSON value doesn't

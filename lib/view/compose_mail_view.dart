@@ -1,6 +1,10 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter_webview/common/enum.dart';
 import 'package:flutter_webview/utils/alert_util.dart';
+import 'package:flutter_webview/view/signer_info_view.dart';
 
 class ComposeMailView extends StatefulWidget {
   const ComposeMailView({super.key});
@@ -22,7 +26,7 @@ class _ComposeMailViewState extends State<ComposeMailView>
   String bcc = "";
   String subject = "";
 
-  String _menuSelectedValue = "";
+  ComposeMenuItem? selectedMenuItem;
 
   InAppWebViewOptions options = InAppWebViewOptions(
     // Setting this off for security. Off by default for SDK versions >= 16.
@@ -59,29 +63,17 @@ class _ComposeMailViewState extends State<ComposeMailView>
               }
             },
           ),
-          PopupMenuButton<String>(
+          PopupMenuButton<ComposeMenuItem>(
             icon: const Icon(Icons.menu),
-            onSelected: (String value) {
-              setState(() {
-                // todo
-                _menuSelectedValue = value;
-              });
-            },
-            itemBuilder: (BuildContext context) => [
-              const PopupMenuItem(
-                value: '1',
-                child: Text('Discard'),
-              ),
-              const PopupMenuItem(
-                value: '2',
-                child: Text('Setting'),
-              ),
-              const PopupMenuItem(
-                value: '3',
-                child: Text('Logout'),
-              ),
-            ],
-          )
+            onSelected: handleMenuItemSelected,
+            itemBuilder: (BuildContext context) =>
+                ComposeMenuItem.values.map((item) {
+              return PopupMenuItem<ComposeMenuItem>(
+                value: item,
+                child: Text(ComposeMenuItemStrings[item]!),
+              );
+            }).toList(),
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -127,6 +119,27 @@ class _ComposeMailViewState extends State<ComposeMailView>
             SizedBox(
               height: MediaQuery.of(context).size.height,
               child: InAppWebView(
+                gestureRecognizers: Set()
+                  ..add(
+                    Factory<TapGestureRecognizer>(
+                      () => TapGestureRecognizer()
+                        ..onTapDown = (_) {
+                          // Handle tap down event
+                          debugPrint("77777 onTapDown");
+                          // focusScopeNode.requestFocus();
+                        },
+                    ),
+                  )
+                  ..add(
+                    Factory<PanGestureRecognizer>(
+                      () => PanGestureRecognizer()
+                        ..onStart = (_) {
+                          // Handle pan start event
+                          // Unfocus the text field here
+                          debugPrint("onStart");
+                        },
+                    ),
+                  ),
                 key: webViewKey,
                 initialFile: 'assets/website/composeEditor.html',
                 initialOptions: InAppWebViewGroupOptions(
@@ -180,5 +193,30 @@ class _ComposeMailViewState extends State<ComposeMailView>
             ),
           ],
         ));
+  }
+
+  void handleMenuItemSelected(ComposeMenuItem selected) {
+    setState(() {
+      selectedMenuItem = selected;
+    });
+    switch (selected) {
+      case ComposeMenuItem.signerInfo:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const SignerInfoView()),
+        );
+        break;
+      case ComposeMenuItem.discard:
+        Navigator.pop(context);
+        break;
+      case ComposeMenuItem.save:
+        // Handle 'save' selection
+        break;
+      case ComposeMenuItem.settings:
+        // Handle 'settings' selection
+        break;
+      default:
+        break;
+    }
   }
 }
