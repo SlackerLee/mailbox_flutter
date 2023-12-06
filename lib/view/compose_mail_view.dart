@@ -125,18 +125,6 @@ class _ComposeMailViewState extends State<ComposeMailView>
                       () => TapGestureRecognizer()
                         ..onTapDown = (_) {
                           // Handle tap down event
-                          debugPrint("77777 onTapDown");
-                          // focusScopeNode.requestFocus();
-                        },
-                    ),
-                  )
-                  ..add(
-                    Factory<PanGestureRecognizer>(
-                      () => PanGestureRecognizer()
-                        ..onStart = (_) {
-                          // Handle pan start event
-                          // Unfocus the text field here
-                          debugPrint("onStart");
                         },
                     ),
                   ),
@@ -145,6 +133,9 @@ class _ComposeMailViewState extends State<ComposeMailView>
                 initialOptions: InAppWebViewGroupOptions(
                   crossPlatform: InAppWebViewOptions(
                     clearCache: true,
+                  ),
+                  android: AndroidInAppWebViewOptions(
+                    useHybridComposition: true,
                   ),
                 ),
                 onWebViewCreated: (controller) async {
@@ -187,6 +178,9 @@ class _ComposeMailViewState extends State<ComposeMailView>
                   maxLines: null,
                   keyboardType: TextInputType.multiline,
                   onChanged: onChanged,
+                  onTapOutside: (event) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
                   decoration: const InputDecoration(
                     border: InputBorder.none,
                   )),
