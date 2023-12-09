@@ -55,7 +55,8 @@ class SignerInfoView extends StatelessWidget {
         InfoListItem(title: "Subject DN:", content: signerDataObj.subjectDN)
       ]);
     } else if (index == 1) {
-      return Column(children: [
+      return Column(
+        children: [
         InfoListItem(title: "Issuer DN:", content: signerDataObj.issuerDN)
       ]);
     } else {

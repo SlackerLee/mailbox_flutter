@@ -36,7 +36,7 @@ class _ReplyMailViewState extends State<ReplyMailView>
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          String? mailContent = await webViewController?.evaluateJavascript(source: "document.body.outerHTML;");
+          String? mailContent = await webViewController?.evaluateJavascript(source: "editor.getContents();");
           if (mailContent != null) {
             showAlertDialog(mailContent); // TODO change to send mail function
           }
@@ -92,9 +92,13 @@ class _ReplyMailViewState extends State<ReplyMailView>
                 // Inject CSS assets
                 await webViewController?.injectCSSFileFromAsset(
                     assetFilePath: "assets/website/meStyle.css");
+                await webViewController?.injectCSSFileFromAsset(
+                    assetFilePath: "assets/website/suneditor.min.css");
                 // Inject JS assets
                 await webViewController?.injectJavascriptFileFromAsset(
                     assetFilePath: "assets/website/meEditor.js");
+                await webViewController?.injectJavascriptFileFromAsset(
+                    assetFilePath: "assets/website/suneditor.min.js");
                 _initEditor();
               },
             ),
@@ -121,6 +125,7 @@ class _ReplyMailViewState extends State<ReplyMailView>
     ${divId != null ? "div.id = '${divId}';" : ""}
     div.innerHTML = body.innerHTML;
     body.innerHTML = div.outerHTML;
+    initSunEditor();
   """);
   }
 

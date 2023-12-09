@@ -291,3 +291,34 @@ function resumeAdjustableObject(tagName) {
         }
     }
 }
+var editor = null;
+function initSunEditor() {
+    editor = SUNEDITOR.create((document.getElementById('meContainer') || 'meContainer'), {
+        // All of the plugins are loaded in the "window.SUNEDITOR" object in dist/suneditor.min.js file
+        // Insert options
+        // Language global object (default: en)
+        buttonList: [
+            [
+                'font', 'fontSize',
+                'bold', 'underline', 'italic', 'strike',
+                'fontColor', 'hiliteColor', 'textStyle',
+                'removeFormat',
+                'align'
+            ],
+        ],
+        lineHeights: [
+            { text: '1', value: 1 },
+        ],
+        fontSize: [
+            8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 34, 36, 48, 72
+        ],
+        position: 'fixed',
+        width: '100%',
+        height: '100%',
+        defaultStyle: 'font-family: Calibri; sans-seri;'
+    });
+    const wrapper = document.getElementsByClassName('se-wrapper');
+    for (var i = 0; i < wrapper.length; i++) {
+        wrapper[i].style.height = '100%';
+    }
+}

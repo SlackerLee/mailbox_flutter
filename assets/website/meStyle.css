@@ -52,3 +52,21 @@ div {
     border-color: #ffffff;
     opacity: 0;
 }
+
+
+/*  custom sun editer  */
+.sun-editor p {
+    line-height: 0.8;
+    /* Adjust the value as per your requirements */
+}
+#suneditor_meContainer {
+    margin-top: 0;
+    top: 0;
+    left: 0;
+    height: 100%;
+    max-width: 100%;
+}
+
+body {
+    overflow: hidden;
+}

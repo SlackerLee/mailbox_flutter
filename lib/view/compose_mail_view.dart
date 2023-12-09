@@ -56,7 +56,7 @@ class _ComposeMailViewState extends State<ComposeMailView>
             onPressed: () async {
               // TODO: send mail
               String? mailContent = await webViewController?.evaluateJavascript(
-                  source: "document.body.outerHTML;");
+                  source: "editor.getContents();");
               if (mailContent != null) {
                 showAlertDialog(
                     mailContent); // TODO change to send mail function
@@ -139,6 +139,18 @@ class _ComposeMailViewState extends State<ComposeMailView>
                   ),
                 ),
                 onWebViewCreated: (controller) async {
+                  controller.addJavaScriptHandler(
+                      handlerName: 'onClickUpdateCallback',
+                      callback: (args) {
+                        // TODO
+                        return args;
+                      });
+                  controller.addJavaScriptHandler(
+                      handlerName: 'inputUpdateCallback',
+                      callback: (args) {
+                        // TODO
+                        return args;
+                      });
                   webViewController = controller;
                 },
                 onLoadStop: (controller, url) async {
@@ -208,6 +220,13 @@ class _ComposeMailViewState extends State<ComposeMailView>
         break;
       case ComposeMenuItem.settings:
         // Handle 'settings' selection
+        webViewController?.addJavaScriptHandler(
+            handlerName: 'handlerFooWithArgs',
+            callback: (args) {
+              print(args);
+              // it will print: [1, true, [bar, 5], {foo: baz}, {bar: bar_value, baz: baz_value}]
+            });
+
         break;
       default:
         break;

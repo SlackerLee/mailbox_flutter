@@ -1,9 +1,13 @@
-<html>
+<!DOCTYPE html>
 
 <head>
     <title></title>
     <link rel="stylesheet" type="text/css" href="meStyle.css">
+    <link rel="stylesheet" type="text/css" href="suneditor.min.css">
     <script type="text/javascript" src="meEditor.js"></script>
+
+    <script type="text/javascript" src="suneditor.min.js" referrerpolicy="origin"></script>
+
     <style>
         html {
             font-family: "Calibri", sans-serif;
@@ -13,10 +17,15 @@
             outline: 0px solid transparent;
         }
     </style>
-    <meta name="viewport" content="width=device-width, height=device-height user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <meta name="viewport"
+        content="width=device-width, height=device-height user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 </head>
 
 <body>
+
+
+    <button id="button" onclick="handleButtonClick();">Send</button>
     <div id="meContainer">
         <div id="myEditableDiv" contentEditable="true">
 
@@ -31,7 +40,27 @@
             document.getElementById('myEditableDiv').addEventListener('input', myUpdateCallback, false);
             document.getElementById('myEditableDiv').addEventListener('click', onClickUpdateCallback, false);
             document.getElementById('myEditableDiv').addEventListener('keypress', myUpdateCallback, false);
+
+            // android
+            window.addEventListener("input", (event) => {
+                console.log(event.data);
+                window.flutter_inappwebview.callHandler('inputUpdateCallback', event.data);
+            }, false);
+
+            window.addEventListener("click", (event) => {
+                console.log(event.data);
+                window.flutter_inappwebview.callHandler('onClickUpdateCallback', "");
+            }, false);
+
+            window.addEventListener("keypress", (event) => {
+                window.flutter_inappwebview.callHandler('inputUpdateCallback', event.data);
+            }, false);
+
         </script>
     </div>
+    <script type="text/javascript">
+        initSunEditor();
+    </script>
 </body>
+
 </html>
