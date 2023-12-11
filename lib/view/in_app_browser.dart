@@ -16,7 +16,7 @@ class _InAppBrowserViewState extends State<InAppBrowserView> with WidgetsBinding
     return Scaffold(
       appBar: AppBar(
         title: const Text('InAppWebView Example'),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
       ),
       body: Column(
         children: [

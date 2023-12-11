@@ -26,6 +26,15 @@ class _ComposeMailViewState extends State<ComposeMailView>
   String bcc = "";
   String subject = "";
 
+  List<Map<String, bool>> checkboxItems = [
+    {"Hight importance": false},
+    {"Read Receipt": false},
+    {"Restricted": false},
+    {"Confidential": false},
+    {"Expand Group": false},
+    {"Prevent Copying": false}
+  ]; // Track the checked state of checkboxes
+
   ComposeMenuItem? selectedMenuItem;
 
   InAppWebViewOptions options = InAppWebViewOptions(
@@ -80,6 +89,52 @@ class _ComposeMailViewState extends State<ComposeMailView>
         child: Column(
           children: <Widget>[
             progressIndicator(),
+            Wrap(
+              children: checkboxItems.map((checkboxItem) {
+                final title = checkboxItem.keys.first;
+                final isChecked = checkboxItem.values.first;
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      checkboxItem[title] = !isChecked;
+                    });
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Checkbox(
+                        fillColor: MaterialStateProperty.all(Colors.transparent),
+                        side: MaterialStateBorderSide.resolveWith(
+                          (Set<MaterialState> states) {
+                            // if (states.contains(MaterialState.selected)) {
+                            return const BorderSide(
+                              color: Colors.grey,
+                              width: 1.5,
+                            );
+                          },
+                        ),
+                        checkColor: Colors.blue,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        value: isChecked,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            checkboxItem[title] = value ?? false;
+                          });
+                        },
+                      ),
+                      Text(
+                        title,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
+            const Divider(
+              height: 1,
+              thickness: 0.5,
+            ),
             addInputTextField('To: ', (value) {
               setState(() {
                 to = value;
@@ -226,7 +281,6 @@ class _ComposeMailViewState extends State<ComposeMailView>
               print(args);
               // it will print: [1, true, [bar, 5], {foo: baz}, {bar: bar_value, baz: baz_value}]
             });
-
         break;
       default:
         break;

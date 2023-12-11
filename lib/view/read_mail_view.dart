@@ -46,7 +46,7 @@ class _ReadMailViewState extends State<ReadMailView>
     return Scaffold(
       appBar: AppBar(
         title: const Text('Read Mail'),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {

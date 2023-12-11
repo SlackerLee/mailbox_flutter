@@ -32,7 +32,7 @@ class _ReplyMailViewState extends State<ReplyMailView>
     return Scaffold(
       appBar: AppBar(
         title: const Text('Reply Mail'),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
