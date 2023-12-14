@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_webview/model/mail_list_item_obj.dart';
 import 'package:flutter_webview/view/compose_mail_view.dart';
 import 'package:flutter_webview/view/read_mail_view.dart';
 import 'package:flutter_webview/view/ui/home/home_app_bar.dart';
@@ -106,14 +107,19 @@ class _HomeViewState extends State<HomeView> {
           body: ListView(
             padding: const EdgeInsets.all(10.0),
             children: <Widget>[
-              MailListItem("Pertrin Lee", "title", "subtitle", true, DateTime.now(), () {
+              MailListItem(
+                  mailListItemDataObj: MailListItemDataObj(
+                      "", "Kars", "Men accused of killing 3,600 birds including eagles", "Simon Paul and Travis John Branson allegedly shot the birds over several years and sold parts and feathers on the black market.", false, DateTime.now()),
+                  onTap: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const ReadMailView(),
                     ));
               }),
-              MailListItem("Joseph Joestar", "title", "subtitle", true, DateTime.now(), () {
+              MailListItem(
+                  mailListItemDataObj: MailListItemDataObj("", "Joseph Joestar", "Today News",
+                      "How are you?", true, DateTime.now()), onTap: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -121,28 +127,6 @@ class _HomeViewState extends State<HomeView> {
                     ));
               }),
             ],
-
-            // ListView.builder(
-            //   controller: _scrollController,
-            //   itemCount: 20,
-
-            // ListTile(
-            //   onTap: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //         builder: (context) => const ReadMailView(),
-            //       ),
-            //     );
-            //   },
-            //   leading: Icon(
-            //     Icons.account_circle,
-            //     size: 50,
-            //   ),
-            //   title: Text('Item $index'),
-            //   subtitle: Text('Item $index'),
-            // );
-            // },
           ),
         ),
       ),

@@ -3,8 +3,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_webview/common/enum.dart';
+import 'package:flutter_webview/model/ui/mail_checkbox_item.dart';
 import 'package:flutter_webview/utils/alert_util.dart';
 import 'package:flutter_webview/view/signer_info_view.dart';
+import 'package:flutter_webview/view/ui/mail/mail_recipients_textfield.dart';
 
 class ComposeMailView extends StatefulWidget {
   const ComposeMailView({super.key});
@@ -25,15 +27,6 @@ class _ComposeMailViewState extends State<ComposeMailView>
   String cc = "";
   String bcc = "";
   String subject = "";
-
-  List<Map<String, bool>> checkboxItems = [
-    {"Hight importance": false},
-    {"Read Receipt": false},
-    {"Restricted": false},
-    {"Confidential": false},
-    {"Expand Group": false},
-    {"Prevent Copying": false}
-  ]; // Track the checked state of checkboxes
 
   ComposeMenuItem? selectedMenuItem;
 
@@ -103,7 +96,8 @@ class _ComposeMailViewState extends State<ComposeMailView>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Checkbox(
-                        fillColor: MaterialStateProperty.all(Colors.transparent),
+                        fillColor:
+                            MaterialStateProperty.all(Colors.transparent),
                         side: MaterialStateBorderSide.resolveWith(
                           (Set<MaterialState> states) {
                             // if (states.contains(MaterialState.selected)) {
@@ -135,38 +129,58 @@ class _ComposeMailViewState extends State<ComposeMailView>
               height: 1,
               thickness: 0.5,
             ),
-            addInputTextField('To: ', (value) {
-              setState(() {
-                to = value;
-              });
-            }),
+            MailRecipientsTextField(
+              label: 'To: ',
+              mainContext: context,
+              key: const ValueKey('compoose_tf_to'),
+              readOnly: false,
+              onChanged: (value) {
+                setState(() {
+                  to = value;
+                });
+              },
+            ),
             const Divider(
               height: 1,
               thickness: 0.5,
             ),
-            addInputTextField('Cc:  ', (value) {
-              setState(() {
-                cc = value;
-              });
-            }),
+            MailRecipientsTextField(
+              key: const ValueKey('compoose_tf_cc'),
+                label: 'Cc: ',
+                mainContext: context,
+                readOnly: false,
+                onChanged: (value) {
+                  setState(() {
+                    cc = value;
+                  });
+                }),
             const Divider(
               height: 1,
               thickness: 0.5,
             ),
-            addInputTextField('Bcc:  ', (value) {
-              setState(() {
-                bcc = value;
-              });
-            }),
+            MailRecipientsTextField(
+                key: const ValueKey('compoose_tf_bcc'),
+                label: 'Bcc: ',
+                mainContext: context,
+                readOnly: false,
+                onChanged: (value) {
+                  setState(() {
+                    bcc = value;
+                  });
+                }),
             const Divider(
               height: 1,
               thickness: 0.5,
             ),
-            addInputTextField('Subject: ', (value) {
-              setState(() {
-                subject = value;
-              });
-            }),
+            MailRecipientsTextField(
+                label: 'Subject: ',
+                mainContext: context,
+                readOnly: false,
+                onChanged: (value) {
+                  setState(() {
+                    subject = value;
+                  });
+                }),
             const Divider(
               height: 1,
               thickness: 0.5,
@@ -228,32 +242,6 @@ class _ComposeMailViewState extends State<ComposeMailView>
       // Handle onDismissed callback
       Navigator.pop(context);
     });
-  }
-
-  Widget addInputTextField(String label, Function(String) onChanged) {
-    return Padding(
-        padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-        child: Row(
-          children: <Widget>[
-            FittedBox(
-              fit: BoxFit.fill,
-              alignment: Alignment.center,
-              child: Text(label, textAlign: TextAlign.left),
-            ),
-            Flexible(
-              child: TextField(
-                  maxLines: null,
-                  keyboardType: TextInputType.multiline,
-                  onChanged: onChanged,
-                  onTapOutside: (event) {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                  },
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                  )),
-            ),
-          ],
-        ));
   }
 
   void handleMenuItemSelected(ComposeMenuItem selected) {

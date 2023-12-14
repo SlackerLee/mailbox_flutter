@@ -1,30 +1,30 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'mail_data_obj.dart';
+part of 'mail_list_item_obj.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-MailDataObj _$MailDataObjFromJson(Map<String, dynamic> json) => MailDataObj(
-      json['from'] as String,
-      json['to'] as String,
-      json['cc'] as String,
-      json['bcc'] as String,
+MailListItemDataObj _$MailListItemDataObjFromJson(Map<String, dynamic> json) =>
+    MailListItemDataObj(
+      json['avatar'] as String,
+      json['sender'] as String,
       json['subject'] as String,
+      json['content'] as String,
+      json['isStared'] as bool,
       json['sentDate'] == null
           ? null
           : DateTime.parse(json['sentDate'] as String),
-      json['content'] as String,
     );
 
-Map<String, dynamic> _$MailDataObjToJson(MailDataObj instance) =>
+Map<String, dynamic> _$MailListItemDataObjToJson(
+        MailListItemDataObj instance) =>
     <String, dynamic>{
-      'from': instance.from,
-      'to': instance.to,
-      'cc': instance.cc,
-      'bcc': instance.bcc,
+      'avatar': instance.avatar,
+      'sender': instance.sender,
       'subject': instance.subject,
       'content': instance.content,
+      'isStared': instance.isStared,
       'sentDate': instance.sentDate?.toIso8601String(),
     };

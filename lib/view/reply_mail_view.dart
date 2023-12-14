@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_webview/model/mail_data_obj.dart';
+import 'package:flutter_webview/model/ui/mail_checkbox_item.dart';
 import 'package:flutter_webview/utils/alert_util.dart';
+import 'package:flutter_webview/view/ui/mail/mail_common_textfield.dart';
+import 'package:flutter_webview/view/ui/mail/mail_recipients_textfield.dart';
 
 class ReplyMailView extends StatefulWidget {
   final MailDataObj mailDataObj;
@@ -36,7 +39,8 @@ class _ReplyMailViewState extends State<ReplyMailView>
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          String? mailContent = await webViewController?.evaluateJavascript(source: "editor.getContents();");
+          String? mailContent = await webViewController?.evaluateJavascript(
+              source: "editor.getContents();");
           if (mailContent != null) {
             showAlertDialog(mailContent); // TODO change to send mail function
           }
@@ -46,33 +50,130 @@ class _ReplyMailViewState extends State<ReplyMailView>
       body: Column(
         children: [
           progressIndicator(),
-          TextFormField(
+          Wrap(
+            children: checkboxItems.map((checkboxItem) {
+              final title = checkboxItem.keys.first;
+              final isChecked = checkboxItem.values.first;
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    checkboxItem[title] = !isChecked;
+                  });
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Checkbox(
+                      fillColor: MaterialStateProperty.all(Colors.transparent),
+                      side: MaterialStateBorderSide.resolveWith(
+                        (Set<MaterialState> states) {
+                          // if (states.contains(MaterialState.selected)) {
+                          return const BorderSide(
+                            color: Colors.grey,
+                            width: 1.5,
+                          );
+                        },
+                      ),
+                      checkColor: Colors.blue,
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      value: isChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          checkboxItem[title] = value ?? false;
+                        });
+                      },
+                    ),
+                    Text(
+                      title,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+          ),
+          const Divider(
+            height: 1,
+            thickness: 0.5,
+          ),
+          MailRecipientsTextField(
             initialValue: mail.from,
-            readOnly: true,
-            decoration: const InputDecoration(labelText: 'From:'),
-            maxLines: null,
-            keyboardType: TextInputType.multiline,
+            label: 'From: ',
+            mainContext: context,
+            readOnly: false,
+            onChanged: (value) {
+              setState(() {
+                mail.from = value;
+              });
+            },
           ),
-          TextFormField(
+          const Divider(
+            height: 1,
+            thickness: 0.5,
+          ),
+          MailRecipientsTextField(
+            label: 'To: ',
+            mainContext: context,
+            readOnly: false,
             initialValue: mail.to,
-            readOnly: true,
-            decoration: const InputDecoration(labelText: 'To:'),
-            maxLines: null,
-            keyboardType: TextInputType.multiline,
+            onChanged: (value) {
+              setState(() {
+                mail.to = value;
+              });
+            },
           ),
-          TextFormField(
-            initialValue: mail.cc,
-            readOnly: true,
-            decoration: const InputDecoration(labelText: 'Cc:'),
-            maxLines: null,
-            keyboardType: TextInputType.multiline,
+          const Divider(
+            height: 1,
+            thickness: 0.5,
           ),
-          TextFormField(
+          MailRecipientsTextField(
+              label: 'Cc: ',
+              mainContext: context,
+              initialValue: mail.cc,
+              readOnly: false,
+              onChanged: (value) {
+                setState(() {
+                  mail.cc = value;
+                });
+              }),
+          const Divider(
+            height: 1,
+            thickness: 0.5,
+          ),
+          MailRecipientsTextField(
+              label: 'Bcc: ',
+              mainContext: context,
+              readOnly: false,
+              onChanged: (value) {
+                setState(() {
+                  mail.bcc = value;
+                });
+              }),
+          const Divider(
+            height: 1,
+            thickness: 0.5,
+          ),
+          MailCommonTextField(
+            label: 'Subject: ',
+            mainContext: context,
+            initialValue: mail.subject,
+            readOnly: false,
+            onChanged: (String value) {},
+          ),
+          const Divider(
+            height: 1,
+            thickness: 0.5,
+          ),
+          MailCommonTextField(
+            label: 'Data: ',
+            mainContext: context,
             initialValue: mail.sentDate.toString(),
-            readOnly: true,
-            decoration: const InputDecoration(labelText: 'Data:'),
-            maxLines: null,
-            keyboardType: TextInputType.multiline,
+            readOnly: false,
+            onChanged: (String value) {},
+          ),
+          const Divider(
+            height: 1,
+            thickness: 0.5,
           ),
           Expanded(
             child: InAppWebView(

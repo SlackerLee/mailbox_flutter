@@ -302,7 +302,7 @@ function initSunEditor() {
                 'font', 'fontSize',
                 'bold', 'underline', 'italic', 'strike',
                 'fontColor', 'hiliteColor', 'textStyle',
-                'removeFormat',
+                'removeFormat','imageGallery',
                 'align'
             ],
         ],
