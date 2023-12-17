@@ -299,11 +299,11 @@ function initSunEditor() {
         // Language global object (default: en)
         buttonList: [
             [
-                'font', 'fontSize',
-                'bold', 'underline', 'italic', 'strike',
-                'fontColor', 'hiliteColor', 'textStyle',
-                'removeFormat','imageGallery',
-                'align'
+                'font',
+                'bold', 'italic', 'underline', 'strike', 'fontSize',
+                'fontColor', 'hiliteColor', 'subscript', 'superscript', 'list', 'textStyle',
+                'indent', 'align', 'link', 'image'
+
             ],
         ],
         lineHeights: [

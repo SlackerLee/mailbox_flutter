@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_webview/model/mail_list_item_obj.dart';
-import 'package:flutter_webview/view/compose_mail_view.dart';
 import 'package:flutter_webview/view/home/home_app_bar.dart';
 import 'package:flutter_webview/view/home/home_compose_floating_action_button.dart';
 import 'package:flutter_webview/view/home/home_expansion_menu.dart';
@@ -40,23 +39,16 @@ class _HomeViewState extends State<HomeView> {
         child: Scaffold(
           appBar: const HomeAppBar(),
           drawer: const Drawer(
-            shape:  RoundedRectangleBorder(
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.zero, // Set borderRadius to zero
             ),
             child:  HomeExpansionMenu(),
           ),
           floatingActionButton: HomeComposeFAB(
             isScrolledUp: isScrolledUp,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ComposeMailView(),
-                ),
-              );
-            },
           ),
           body: ListView(
+            controller: _scrollController,
             padding: const EdgeInsets.all(10.0),
             children: <Widget>[
               MailListItem(

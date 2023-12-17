@@ -36,6 +36,7 @@ class _HomeExpansionMenuState extends State<HomeExpansionMenu> {
           ExpansionTile(
             leading: const Icon(Icons.mail_lock),
             title: const Text('Confidential Mail'),
+            iconColor: Colors.blue,
             children: <Widget>[
               ListTile(
                 leading: const Icon(Icons.mail_outline),
@@ -64,6 +65,7 @@ class _HomeExpansionMenuState extends State<HomeExpansionMenu> {
           ExpansionTile(
             leading: const Icon(Icons.mail_lock_outlined),
             title: const Text('Restricted Mail'),
+            iconColor: Colors.blue,
             children: <Widget>[
               ListTile(
                 leading: const Icon(Icons.mail_outline),

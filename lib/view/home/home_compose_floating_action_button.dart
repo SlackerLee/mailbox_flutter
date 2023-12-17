@@ -1,38 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:flutter_webview/view/compose_mail_view.dart';
 
 class HomeComposeFAB extends StatelessWidget {
   final bool isScrolledUp;
-  final VoidCallback onPressed;
 
-  const HomeComposeFAB(
-      {super.key, required this.isScrolledUp, required this.onPressed});
+  const HomeComposeFAB({super.key, required this.isScrolledUp});
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton.extended(
-        onPressed: onPressed,
-        label: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 100),
-          transitionBuilder: (Widget child, Animation<double> animation) =>
-              FadeTransition(
-            opacity: animation,
-            child: SizeTransition(
-              sizeFactor: animation,
-              axis: Axis.horizontal,
-              child: child,
-            ),
-          ),
-          child: isScrolledUp
-              ? const Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(right: 4.0),
-                      child: Icon(Icons.edit),
-                    ),
-                    Text("Compose")
-                  ],
-                )
-              : const Icon(Icons.arrow_forward),
-        ));
+    return SpeedDial(
+      label: isScrolledUp ? const Text("Compose") : null,
+      child: Icon(Icons.edit),
+      spaceBetweenChildren: 15,
+      overlayOpacity: 0.5,
+      children: [
+        SpeedDialChild(
+          child: const Icon(Icons.mail_lock),
+          label: 'Restricted Mail',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ComposeMailView(),
+              ),
+            );
+          },
+        ),
+        SpeedDialChild(
+          child: const Icon(Icons.mail_lock_outlined),
+          label: 'Confidential Mail',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ComposeMailView(),
+              ),
+            );
+          },
+        ),
+      ],
+    );
   }
 }
