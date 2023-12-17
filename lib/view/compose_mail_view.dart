@@ -5,8 +5,9 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_webview/common/enum.dart';
 import 'package:flutter_webview/model/ui/mail_checkbox_item.dart';
 import 'package:flutter_webview/utils/alert_util.dart';
+import 'package:flutter_webview/view/mail/mail_common_textfield.dart';
+import 'package:flutter_webview/view/mail/mail_recipients_textfield.dart';
 import 'package:flutter_webview/view/signer_info_view.dart';
-import 'package:flutter_webview/view/ui/mail/mail_recipients_textfield.dart';
 
 class ComposeMailView extends StatefulWidget {
   const ComposeMailView({super.key});
@@ -172,7 +173,7 @@ class _ComposeMailViewState extends State<ComposeMailView>
               height: 1,
               thickness: 0.5,
             ),
-            MailRecipientsTextField(
+            MailCommonTextField(
                 label: 'Subject: ',
                 mainContext: context,
                 readOnly: false,

@@ -3,8 +3,8 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_webview/model/mail_data_obj.dart';
 import 'package:flutter_webview/model/ui/mail_checkbox_item.dart';
 import 'package:flutter_webview/utils/alert_util.dart';
-import 'package:flutter_webview/view/ui/mail/mail_common_textfield.dart';
-import 'package:flutter_webview/view/ui/mail/mail_recipients_textfield.dart';
+import 'package:flutter_webview/view/mail/mail_common_textfield.dart';
+import 'package:flutter_webview/view/mail/mail_recipients_textfield.dart';
 
 class ReplyMailView extends StatefulWidget {
   final MailDataObj mailDataObj;

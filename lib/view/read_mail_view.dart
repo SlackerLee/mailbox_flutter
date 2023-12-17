@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_webview/model/mail_data_obj.dart';
 import 'package:flutter_webview/model/ui/mail_checkbox_item.dart';
+import 'package:flutter_webview/view/mail/mail_common_textfield.dart';
 import 'package:flutter_webview/view/reply_mail_view.dart';
-import 'package:flutter_webview/view/ui/mail/mail_common_textfield.dart';
-import 'package:flutter_webview/view/ui/mail/mail_recipients_textfield.dart';
 
 class ReadMailView extends StatefulWidget {
   const ReadMailView({super.key});
@@ -101,7 +100,7 @@ class _ReadMailViewState extends State<ReadMailView>
             height: 1,
             thickness: 0.5,
           ),
-          MailRecipientsTextField(
+          MailCommonTextField(
             label: 'From: ',
             mainContext: context,
             initialValue: mailDataObj.from,
@@ -112,7 +111,7 @@ class _ReadMailViewState extends State<ReadMailView>
             height: 1,
             thickness: 0.5,
           ),
-          MailRecipientsTextField(
+          MailCommonTextField(
             label: 'To: ',
             mainContext: context,
             initialValue: mailDataObj.to,
@@ -123,7 +122,7 @@ class _ReadMailViewState extends State<ReadMailView>
             height: 1,
             thickness: 0.5,
           ),
-          MailRecipientsTextField(
+          MailCommonTextField(
             label: 'Cc: ',
             mainContext: context,
             initialValue: mailDataObj.cc,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_webview/view/address_book/adress_book_list_view.dart';
-import 'package:flutter_webview/view/ui/mail/mail_common_textfield.dart';
+import 'package:flutter_webview/view/address_book/address_book_list_view.dart';
+import 'package:flutter_webview/view/mail/mail_common_textfield.dart';
 
 class MailRecipientsTextField extends MailCommonTextField {
   const MailRecipientsTextField({
@@ -31,6 +31,7 @@ class MailRecipientsTextField extends MailCommonTextField {
             builder: (context) => AddressBookListView(textFieldkey: key),
           ),
         );
+
       },
       child: FittedBox(
         fit: BoxFit.fill,
