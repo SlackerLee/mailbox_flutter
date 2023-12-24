@@ -157,6 +157,31 @@ class _ReadMailViewState extends State<ReadMailView>
             height: 1,
             thickness: 0.5,
           ),
+          SizedBox(
+            height: 100,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 100, // Replace with your actual item count
+              itemBuilder: (context, index) {
+                return Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            1), // Adjust the radius as needed
+                      ),
+                      child: Container(
+                        width: 200, // Adjust the width as needed
+                        child: ListTile(
+                          leading: Icon(Icons.description, size: 50), 
+                          title: Text('Attachment$index.docx'),
+                          subtitle: Text('2.5KB'),
+                        ),
+                      ),
+                    ));
+              },
+            ),
+          ),
           Expanded(
             child: InAppWebView(
               key: GlobalKey(),
