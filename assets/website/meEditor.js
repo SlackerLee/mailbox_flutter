@@ -291,6 +291,7 @@ function resumeAdjustableObject(tagName) {
         }
     }
 }
+
 var editor = null;
 function initSunEditor() {
     editor = SUNEDITOR.create((document.getElementById('meContainer') || 'meContainer'), {
@@ -302,7 +303,7 @@ function initSunEditor() {
                 'font',
                 'bold', 'italic', 'underline', 'strike', 'fontSize',
                 'fontColor', 'hiliteColor', 'subscript', 'superscript', 'list', 'textStyle',
-                'indent', 'align', 'link', 'image'
+                'indent', 'align', 'link','table', 'image'
 
             ],
         ],

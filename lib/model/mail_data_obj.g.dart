@@ -11,6 +11,7 @@ MailDataObj _$MailDataObjFromJson(Map<String, dynamic> json) => MailDataObj(
       json['to'] as String,
       json['cc'] as String,
       json['bcc'] as String,
+      json['type'] as String,
       json['subject'] as String,
       json['sentDate'] == null
           ? null
@@ -24,6 +25,7 @@ Map<String, dynamic> _$MailDataObjToJson(MailDataObj instance) =>
       'to': instance.to,
       'cc': instance.cc,
       'bcc': instance.bcc,
+      'type': instance.type,
       'subject': instance.subject,
       'content': instance.content,
       'sentDate': instance.sentDate?.toIso8601String(),

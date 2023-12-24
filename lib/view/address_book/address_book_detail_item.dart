@@ -85,7 +85,6 @@ class _AddressBookDetailItemState extends State<AddressBookDetailItem> {
                 ],
               ),
             ),
-            
           ],
         ),
       ),

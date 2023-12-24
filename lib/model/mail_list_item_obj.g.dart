@@ -12,6 +12,7 @@ MailListItemDataObj _$MailListItemDataObjFromJson(Map<String, dynamic> json) =>
       json['sender'] as String,
       json['subject'] as String,
       json['content'] as String,
+      json['type'] as String,
       json['isStared'] as bool,
       json['sentDate'] == null
           ? null
@@ -25,6 +26,7 @@ Map<String, dynamic> _$MailListItemDataObjToJson(
       'sender': instance.sender,
       'subject': instance.subject,
       'content': instance.content,
+      'type': instance.type,
       'isStared': instance.isStared,
       'sentDate': instance.sentDate?.toIso8601String(),
     };

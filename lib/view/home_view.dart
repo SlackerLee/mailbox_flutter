@@ -33,6 +33,36 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO show data by call server api
+    List<MailListItem> mailList = [
+      MailListItem(
+          mailListItemDataObj: MailListItemDataObj(
+              "",
+              "Kars",
+              "Men accused of killing 3,600 birds including eagles",
+              "Simon Paul and Travis John Branson allegedly shot the birds over several years and sold parts and feathers on the black market.",
+              "C",
+              false,
+              DateTime.now()),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ReadMailView(),
+                ));
+          }),
+      MailListItem(
+          mailListItemDataObj: MailListItemDataObj("", "Joseph Joestar",
+              "Today News", "How are you?", "R", true, DateTime.now()),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ReadMailView(),
+                ));
+          })
+    ];
+
     return Container(
       color: Colors.white, // Set the desired background color
       child: SafeArea(
@@ -42,42 +72,18 @@ class _HomeViewState extends State<HomeView> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.zero, // Set borderRadius to zero
             ),
-            child:  HomeExpansionMenu(),
+            child: HomeExpansionMenu(),
           ),
           floatingActionButton: HomeComposeFAB(
             isScrolledUp: isScrolledUp,
           ),
-          body: ListView(
-            controller: _scrollController,
-            padding: const EdgeInsets.all(10.0),
-            children: <Widget>[
-              MailListItem(
-                  mailListItemDataObj: MailListItemDataObj(
-                      "",
-                      "Kars",
-                      "Men accused of killing 3,600 birds including eagles",
-                      "Simon Paul and Travis John Branson allegedly shot the birds over several years and sold parts and feathers on the black market.",
-                      false,
-                      DateTime.now()),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ReadMailView(),
-                        ));
-                  }),
-              MailListItem(
-                  mailListItemDataObj: MailListItemDataObj("", "Joseph Joestar",
-                      "Today News", "How are you?", true, DateTime.now()),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ReadMailView(),
-                        ));
-                  }),
-            ],
-          ),
+          body: mailList.isEmpty
+              ? Center(child: Text("No result"))
+              : ListView(
+                  controller: _scrollController,
+                  padding: const EdgeInsets.all(10.0),
+                  children: mailList,
+                ),
         ),
       ),
     );

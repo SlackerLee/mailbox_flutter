@@ -4,6 +4,7 @@ class MailCommonTextField extends StatelessWidget {
   final String label;
   final BuildContext mainContext;
   final String? initialValue;
+  final String? type;
   final ValueChanged<String>? onChanged;
   final bool readOnly;
 
@@ -11,6 +12,7 @@ class MailCommonTextField extends StatelessWidget {
       {super.key,
       required this.mainContext,
       required this.label,
+      this.type,
       this.initialValue,
       required this.readOnly,
       required this.onChanged});
@@ -21,14 +23,25 @@ class MailCommonTextField extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
         child: Row(
           children: <Widget>[
-            titleTextLabel(label),
+            if (type != null)
+              type == "C"
+                  ? titleTextLabel(label + ' Confidential: ')
+                  : titleTextLabel(label)
+            else
+              titleTextLabel(label),
             Flexible(
               child: TextFormField(
                   initialValue: initialValue,
                   readOnly: readOnly,
                   maxLines: null,
                   keyboardType: TextInputType.multiline,
-                  style: const TextStyle(fontSize: 16),
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: type != null
+                          ? type == "C"
+                              ? Colors.red
+                              : Colors.black
+                          : null),
                   onChanged: onChanged,
                   onTapOutside: (event) {
                     FocusManager.instance.primaryFocus?.unfocus();
@@ -48,7 +61,13 @@ class MailCommonTextField extends StatelessWidget {
       child: Text(
         label,
         textAlign: TextAlign.left,
-        style: const TextStyle(fontSize: 16),
+        style: TextStyle(
+            fontSize: 16,
+            color: type != null
+                ? type == "C"
+                    ? Colors.red
+                    : Colors.black
+                : null),
       ),
     );
   }

@@ -22,7 +22,7 @@ class HomeComposeFAB extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ComposeMailView(),
+                builder: (context) => const ComposeMailView(mailType: 'R',),
               ),
             );
           },
@@ -34,7 +34,7 @@ class HomeComposeFAB extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ComposeMailView(),
+                builder: (context) => const ComposeMailView(mailType: 'C',),
               ),
             );
           },

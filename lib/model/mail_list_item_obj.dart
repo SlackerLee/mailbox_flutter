@@ -8,12 +8,13 @@ class MailListItemDataObj {
    String sender;
    String subject;
    String content;
+   String type;
    bool isStared;
   /// The generated code below handles if the corresponding JSON value doesn't
   /// exist or is empty.
    DateTime? sentDate;
 
-  MailListItemDataObj(this.avatar, this.sender, this.subject, this.content, this.isStared,this.sentDate);
+  MailListItemDataObj(this.avatar, this.sender, this.subject, this.content, this.type, this.isStared,this.sentDate);
 
   factory MailListItemDataObj.fromJson(Map<String, dynamic> json) => _$MailListItemDataObjFromJson(json);
 

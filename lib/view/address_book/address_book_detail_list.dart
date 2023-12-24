@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webview/model/address_book/address_book_detail_item_obj.dart';
 import 'package:flutter_webview/view/address_book/address_book_detail_item.dart';
+import 'package:flutter_webview/view/user_info_view.dart';
 
 class AddressBookDetailListView extends StatefulWidget {
   final String addressBookName;
@@ -14,7 +15,7 @@ class AddressBookDetailListView extends StatefulWidget {
 
 class _AddressBookDetailListViewState extends State<AddressBookDetailListView> {
   bool _searchBoolean = false;
-  List<int> _searchIndexList = []; 
+  List<int> _searchIndexList = [];
 
   // TODO: this demo data
   final List<AddressBookDetailItemDataObj> items = [
@@ -30,8 +31,8 @@ class _AddressBookDetailListViewState extends State<AddressBookDetailListView> {
         "Systems Manager", "3847 XXXX", "OGCIO"),
     AddressBookDetailItemDataObj("User C/OGCIO", "userC@ogcio.gov",
         "Assistant System Manager", "3847 XXXX", "OGCIO"),
-    AddressBookDetailItemDataObj("User D/OGCIO", "userDA@ogcio.gov",
-        "Analyst Programmer", "3847 XXXX", "OGCIO")
+    AddressBookDetailItemDataObj(
+        "User D/OGCIO", "", "Analyst Programmer", "3847 XXXX", "OGCIO")
   ];
 
   @override
@@ -84,10 +85,10 @@ class _AddressBookDetailListViewState extends State<AddressBookDetailListView> {
   Widget _searchTextField() {
     return Container(
       decoration: BoxDecoration(
-        // TODO: ui design
-        // color: const Color.fromARGB(255, 246, 246, 246),
-        // borderRadius: BorderRadius.circular(32),
-      ),
+          // TODO: ui design
+          // color: const Color.fromARGB(255, 246, 246, 246),
+          // borderRadius: BorderRadius.circular(32),
+          ),
       child: TextField(
         onChanged: (String s) {
           setState(() {
@@ -124,9 +125,17 @@ class _AddressBookDetailListViewState extends State<AddressBookDetailListView> {
       itemCount: items.length,
       itemBuilder: (context, index) {
         return InkWell(
+            onLongPress: () {
+              // TODO
+            },
             onTap: () {
-              // Handle onTap event for the item
-              print('Tapped item: ${items[index]}');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserInfoView(
+                      addressBookDetailDataObj: items[index],
+                    ),
+                  ));
             },
             child: Column(
               children: <Widget>[

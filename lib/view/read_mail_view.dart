@@ -34,6 +34,7 @@ class _ReadMailViewState extends State<ReadMailView>
         'user22@mail.com',
         'hello@mail.com',
         'tester@mail.com',
+        "C",
         'subject',
         DateTime(2020, 5, 5), """
     <html>
@@ -136,6 +137,7 @@ class _ReadMailViewState extends State<ReadMailView>
           MailCommonTextField(
             label: 'Subject: ',
             mainContext: context,
+            type: mailDataObj.type,
             initialValue: mailDataObj.subject,
             readOnly: true,
             onChanged: (String value) {},

@@ -9,6 +9,7 @@ class MailDataObj {
    String to;
    String cc;
    String bcc;
+   String type;
    String subject;
    String content;
 
@@ -16,7 +17,7 @@ class MailDataObj {
   /// exist or is empty.
    DateTime? sentDate;
 
-  MailDataObj(this.from, this.to, this.cc, this.bcc, this.subject,this.sentDate, this.content);
+  MailDataObj(this.from, this.to, this.cc, this.bcc,this.type, this.subject,this.sentDate, this.content);
 
   factory MailDataObj.fromJson(Map<String, dynamic> json) =>
       _$MailDataObjFromJson(json);

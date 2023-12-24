@@ -33,13 +33,14 @@ class MailRecipientsTextField extends MailCommonTextField {
         );
 
       },
-      child: FittedBox(
+      child:
+      FittedBox(
         fit: BoxFit.fill,
         alignment: Alignment.center,
         child: Text(
           label,
           textAlign: TextAlign.left,
-          style: const TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: 16,  color: Colors.blue),
         ),
       ),
     );

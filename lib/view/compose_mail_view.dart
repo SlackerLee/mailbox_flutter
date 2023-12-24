@@ -10,10 +10,13 @@ import 'package:flutter_webview/view/mail/mail_recipients_textfield.dart';
 import 'package:flutter_webview/view/signer_info_view.dart';
 
 class ComposeMailView extends StatefulWidget {
-  const ComposeMailView({super.key});
+  final String mailType;
+
+  const ComposeMailView({super.key, required this.mailType});
 
   @override
   State<ComposeMailView> createState() => _ComposeMailViewState();
+
 }
 
 class _ComposeMailViewState extends State<ComposeMailView>
@@ -177,6 +180,7 @@ class _ComposeMailViewState extends State<ComposeMailView>
                 label: 'Subject: ',
                 mainContext: context,
                 readOnly: false,
+                type: widget.mailType,
                 onChanged: (value) {
                   setState(() {
                     subject = value;

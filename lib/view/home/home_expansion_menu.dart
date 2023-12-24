@@ -45,7 +45,7 @@ class _HomeExpansionMenuState extends State<HomeExpansionMenu> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ComposeMailView(),
+                      builder: (context) => const ComposeMailView(mailType: 'C',),
                     ),
                   );
                 },
@@ -74,7 +74,7 @@ class _HomeExpansionMenuState extends State<HomeExpansionMenu> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ComposeMailView(),
+                      builder: (context) => const ComposeMailView(mailType: 'R',),
                     ),
                   );
                 },
