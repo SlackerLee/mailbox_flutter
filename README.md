@@ -1,16 +1,12 @@
-# flutter_webview
+To practice the following tasks in a Flutter project:
 
-A new Flutter project.
+UI:
+- create a mailbox interface like Gmail, Outlook
+- drawer with expandable menu
+- Floating Action Button with mutiple button
 
-## Getting Started
+Webview:
+- using flutter_inappwebview to display the html mail content
+- implementing Two-Way communication between Flutter and WebView
+- webview with WYSIWYG text editor 
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
